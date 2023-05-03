@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mybatis.mapper.UserMapper">
+<!--    <select id="getUserByName" resultType="com.example.mybatis.model.User">-->
+<!--        select * from User where nickname=#{name} for update-->
+<!--    </select>-->
+    <select id="getUserByName" resultType="com.example.mybatis.model.User">
+            select * from User where nickname=#{name}
+    </select>
+
+    <select id = "getUserListByNameList" resultType="com.example.mybatis.model.User">
+        select * from User
+        where name in
+        <foreach collection="nameList"  item="name" open="(" separator="," close=")" index="index">
+            #{index}
+        </foreach>
+    </select>
+
+    <update id="updateUserCntByName" >
+        update user
+        set cnt = #{cnt}, version = version + 1
+        where nickname like #{name}
+        and version = #{version}
+    </update>
+
+</mapper>
